@@ -1,0 +1,13 @@
+name: NESCAC-Shiny
+title: NESCAC-Shiny
+username:
+account: tmarshall21
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1653269
+bundleId: 2739880
+url: https://tmarshall21.shinyapps.io/NESCAC-Shiny/
+when: 1579463178.46705
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: nescacwar.Rda|nescacwar2.Rda

@@ -1,0 +1,217 @@
+---
+title: "NESCAC_WAR2020"
+author: "Tyler Marshall"
+date: "3/18/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(robotstxt)
+library(knitr)
+library(rvest)
+```
+
+```{r}
+paths_allowed("https://www.nescac.com/sports/bsb/2019-20/players?sort=ab&view=&pos=h&r=0")
+```
+
+```{r}
+
+amherst_page <- read_html("http://athletics.amherst.edu/sports/bsb/2019-20/teams/amherst?view=lineup&r=0&pos=") #URL for Amherst stats
+
+amherst_tables <- html_nodes(amherst_page, "table") #Read in data
+amherst <- html_table(amherst_tables[[4]]) #Hitting Data
+amherst2 <- html_table(amherst_tables[[5]]) #Extended Hitting Data
+amherstpitch <- html_table(amherst_tables[[6]]) #Pitching Data
+
+amhersthit <- inner_join(amherst, amherst2, by="Name") #Join two hitting datasets
+names(amhersthit)[9]<-"Doubles" #Naming column Doubles
+names(amhersthit)[10]<-"Triples" #Naming column Triples
+
+amhersthit2 <- amhersthit %>%
+  mutate(School= "Amherst") #Add school to be used later
+```
+
+```{r}
+bates_page <- read_html("https://www.gobatesbobcats.com/sports/bsb/2019-20/teams/bates") #URL for Bates data
+
+bates_tables <- html_nodes(bates_page, "table") #Read in data
+bates <- html_table(bates_tables[[4]]) #Hitting Data
+bates2 <- html_table(bates_tables[[5]]) #Extended Hitting data
+batespitch <- html_table(bates_tables[[6]]) #Pitching Data
+
+bateshit <- inner_join(bates, bates2, by="Name") #Join two hitting datasets
+names(bateshit)[9]<-"Doubles" #Naming column Doubles
+names(bateshit)[10]<-"Triples" #Naming column Triples
+
+bateshit2 <- bateshit %>%
+  mutate(School= "Bates") #Add school to be used later
+```
+
+```{r}
+
+bowdoin_page <- read_html("https://athletics.bowdoin.edu/sports/bsb/2019-20/teams/bowdoin") #URL for Bowdoin data
+
+bowdoin_tables <- html_nodes(bowdoin_page, "table") #Read in data
+bowdoin <- html_table(bowdoin_tables[[4]]) #Hitting data
+bowdoin2 <- html_table(bowdoin_tables[[5]]) #Extended hitting data
+bowdoinpitch <- html_table(bowdoin_tables[[6]]) #Pitching data
+
+bowdoinhit <- inner_join(bowdoin, bowdoin2, by="Name") #Join two hitting datasets
+names(bowdoinhit)[9]<-"Doubles" #Naming column Doubles
+names(bowdoinhit)[10]<-"Triples" #Naming column Triples
+
+bowdoinhit2 <- bowdoinhit %>%
+  mutate(School= "Bowdoin") #Add school to be used later
+```
+
+```{r}
+colby_page <- read_html("https://gocolbymules.com/sports/bsb/2019-20/teams/colby") #URL for data
+
+colby_tables <- html_nodes(colby_page, "table") #Read in data
+colby <- html_table(colby_tables[[4]]) #Hitting data
+colby2 <- html_table(colby_tables[[5]]) #Extended hitting data
+colbypitch <- html_table(colby_tables[[6]]) #Pitching data
+
+colbyhit <- inner_join(colby, colby2, by="Name") #Join two hitting datasets
+names(colbyhit)[9]<-"Doubles" #Naming column Doubles
+names(colbyhit)[10]<-"Triples" #Naming column Triples
+
+colbyhit2 <- colbyhit %>%
+  mutate(School= "Colby") #Add school to be used later
+```
+
+
+```{r}
+hamilton_page <- read_html("https://athletics.hamilton.edu/sports/bsb/2019-20/teams/hamilton") #URL for Hamilton data
+
+hamilton_tables <- html_nodes(hamilton_page, "table") #Read in data
+hamilton <- html_table(hamilton_tables[[4]]) #Hitting data
+hamilton2 <- html_table(hamilton_tables[[5]]) #Extended hitting data
+hamiltonpitch <- html_table(hamilton_tables[[6]]) #Pitching data
+
+hamiltonhit <- inner_join(hamilton, hamilton2, by="Name") #Join two hitting datasets
+names(hamiltonhit)[9]<-"Doubles" #Naming column Doubles
+names(hamiltonhit)[10]<-"Triples" #Naming column Triples
+
+hamiltonhit2 <- hamiltonhit %>%
+  mutate(School="Hamilton") #Add school to be used later
+
+```
+
+```{r}
+midd_page <- read_html("https://athletics.middlebury.edu/sports/bsb/2019-20/teams/middlebury") #URL for Middlebury data
+
+midd_tables <- html_nodes(midd_page, "table") #Read in data
+middlebury <- html_table(midd_tables[[5]]) #Hitting data
+middlebury2 <- html_table(midd_tables[[7]]) #Extended hitting data
+middleburypitch <- html_table(midd_tables[[9]]) #Pitching data
+
+middleburyhit <- inner_join(middlebury, middlebury2, by="Name") #Join two hitting datasets
+names(middleburyhit)[9]<-"Doubles" #Naming column Doubles
+names(middleburyhit)[10]<-"Triples" #Naming column Triples
+
+middleburyhit2 <- middleburyhit %>%
+  mutate(School= "Middlebury") #Add school to be used later
+```
+
+```{r}
+trinity_page <- read_html("https://www.bantamsports.com/sports/bsb/2019-20/teams/trinityconn") #URL for Trinity data
+
+trinity_tables <- html_nodes(trinity_page, "table") #Read in data
+trinity <- html_table(trinity_tables[[4]]) #Hitting data
+trinity2 <- html_table(trinity_tables[[5]]) #Extended hitting data
+trinitypitch <- html_table(trinity_tables[[6]]) #Pitching data
+
+trinityhit <- inner_join(trinity, trinity2, by="Name") #Join two hitting datasets
+names(trinityhit)[9]<-"Doubles" #Naming column Doubles
+names(trinityhit)[10]<-"Triples" #Naming column Triples
+
+trinityhit2 <- trinityhit %>%
+  mutate(School= "Trinity") #Add school to be used later
+```
+
+
+```{r}
+williams_page <- read_html("https://ephsports.williams.edu/sports/bsb/2019-20/teams/williams") #URL for Williams data
+
+williams_tables <- html_nodes(williams_page, "table") #Read in data
+williams <- html_table(williams_tables[[4]]) #Hitting data
+williams2 <- html_table(williams_tables[[5]]) #Extended hitting data
+williamspitch <- html_table(williams_tables[[6]]) #Pitching data
+
+williamshit <- inner_join(williams, williams2, by="Name") #Join two hitting datasets
+names(williamshit)[9]<-"Doubles" #Naming column Doubles
+names(williamshit)[10]<-"Triples" #Naming column Triples
+
+williamshit2 <- williamshit %>%
+  mutate(School= "Williams") #Add school to be used later
+```
+
+
+```{r}
+nescachit <- rbind(amhersthit2, bateshit2, bowdoinhit2, colbyhit2, hamiltonhit2, middleburyhit2, trinityhit2, williamshit2) #Bind each NESCAC school hitting data into one dataset
+
+nescacpitch <- rbind(amherstpitch, batespitch, bowdoinpitch, colbypitch, hamiltonpitch, middleburypitch, trinitypitch, williamspitch)
+
+nescacpitch2 <- nescacpitch %>%
+  mutate(totalip = sum(ip))
+
+nescachit <- nescachit %>%
+  filter(Name != "Totals") %>% #Remove Totals
+  filter(Name != "Opponent") %>% #Remove Opponents
+  mutate(Doubles= as.numeric(Doubles)) %>% #Make numeric variables numeric
+  mutate(Triples= as.numeric(Triples)) %>%
+  mutate(hr= as.numeric(hr)) %>%
+  mutate(hbp= as.numeric(hbp)) %>%
+  mutate(sf= as.numeric(sf)) %>%
+  mutate(sh= as.numeric(sh)) %>%
+  mutate(Singles= 0) %>%
+  mutate(Singles= h-Doubles-Triples-hr) %>% #Create a variable for Singles
+  mutate(bb= as.numeric(bb)) %>%
+  mutate(obp= as.numeric(obp)) %>%
+  mutate(sb= as.numeric(sb)) %>%
+  mutate(cs= as.numeric(cs)) %>%
+  mutate(slg= as.numeric(slg))
+nescachit[is.na(nescachit)] <- 0 #Replace all NAs with 0s
+```
+
+```{r}
+nescactotal <- nescachit %>%
+  mutate(totalbb= sum(bb)) %>%
+  mutate(totalhbp = sum(hbp)) %>%
+  mutate(totalsingles= sum(Singles)) %>%
+  mutate(totaldoubles= sum(Doubles)) %>%
+  mutate(totaltriples= sum(Triples)) %>%
+  mutate(totalhr= sum(hr)) %>%
+  mutate(totalpa= sum(ab + bb + sf + hbp)) %>%
+  mutate(totalsb= sum(sb)) %>%
+  mutate(totalcs= sum(cs)) %>%
+  mutate(totalruns= sum(r)) %>%
+  mutate(averageobp= sum(obp)/128) %>%
+  mutate(coef = (.55*totalbb + .57 * totalhbp + .7 * totalsingles + totaldoubles + 1.27*totaltriples + 1.65* totalhr)/(totalpa)) %>% #Coefficient for wOBA
+  mutate(wOBAscale= averageobp/coef) %>% #Found wOBAscale for NESCAC
+  mutate(lgwSB= (totalsb *.2 + totalcs * -.4)/(totalsingles+totalbb+totalhbp)) %>% #Found lgwSB for NESCAC using .2 for runSB and -.4 for runCS (based on MLB recent years) 
+  mutate(RPW = 9 *(totalruns/755.4)*1.5 +3) %>% #755.4 is total innings, calculating Runs per Win
+  mutate(RperPA = totalruns/totalpa) #Calculate runs per plate appearance needed for wRC
+
+```
+
+```{r}
+nescacwar <- nescachit %>%
+  mutate(OPS= obp+slg) %>%
+  mutate(wOBA = ((1.11*.55)*bb + (1.11*.57) *hbp + (1.11*.7)*Singles + (1.11) * Doubles + (1.11*1.2) * Triples + (1.11*1.65)* hr)/ (ab+bb+hbp+sf)) %>%
+  mutate(wRAA= ((wOBA- .333)/1.11)*(ab+bb+hbp+sf+sh)) %>%
+  mutate(wSB= (sb*.2) + (cs*-.4) - (.0245 * (Singles+bb+hbp))) %>%
+  mutate(fOWar= (wRAA + wSB + 20/600 * pa)/ 7.43) %>% #Using Fangraphs War (only offense), divided by runs per win which is 13.36 for the NESCAC
+  mutate(wRC= (((wOBA- .333/1.11)) + .195)*pa) #wRC Calculation
+
+amherstwar <- nescacwar %>%
+  filter(School == "Amherst")
+
+```
